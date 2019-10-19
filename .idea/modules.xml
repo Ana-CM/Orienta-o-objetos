@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Main/Main.iml" filepath="$PROJECT_DIR$/Main/Main.iml" />
       <module fileurl="file://$PROJECT_DIR$/Matéria/Matéria.iml" filepath="$PROJECT_DIR$/Matéria/Matéria.iml" />
       <module fileurl="file://$PROJECT_DIR$/Pessoas/Pessoas.iml" filepath="$PROJECT_DIR$/Pessoas/Pessoas.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/orientacao-a-objetos.iml" filepath="$PROJECT_DIR$/.idea/orientacao-a-objetos.iml" />
