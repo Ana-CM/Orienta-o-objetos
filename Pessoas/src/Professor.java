@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-
+// altercao teste
 public class Professor extends Pessoa{
 
    private String departamento;
