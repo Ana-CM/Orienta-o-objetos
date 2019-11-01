@@ -1,12 +1,11 @@
 public class Pessoa {
     private String nome;
-    private int totalhoras;
+    protected int totalhoras;
     private String CPF;
     private String dataNascimento;
 
-    public Pessoa(String nome, int totalhoras, String CPF, String dataNascimento) {
+    public Pessoa(String nome, String CPF, String dataNascimento) {
         this.nome = nome;
-        this.totalhoras = totalhoras;
         this.CPF = CPF;
         this.dataNascimento = dataNascimento;
     }
