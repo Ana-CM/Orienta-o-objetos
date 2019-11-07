@@ -4,13 +4,13 @@ import java.util.List;
 public class Professor extends Pessoa{
 
    private String departamento;
-   private List <Materia> listaMateria = new Arraylist<>();
+   private List <Materia> listaMateria = new ArrayList<>();
    private int totalHoras;
-   private String departamento;
 
    // construtor
-   public Professor(String nome, String CPF, String matricula, List<Materia> listaMateria, String departamento){
-       super( Professor.nome, Professor.CPF, Professor.matricula, Professor.listaMateria);
+   public Professor(String nome, String CPF, String dataNascimento,List<Materia> listaMateria ){
+       super( nome, CPF, dataNascimento);
+       this.listaMateria = listaMateria;
        this.departamento = departamento;
        }
    
@@ -32,10 +32,10 @@ public class Professor extends Pessoa{
 
    public void calculaTotalHoras(){
     // método para calcular o total de horas, somando toda a carga       //horária das matérias lecionada  mais o horário de atendimento
-    int totalHoras = 0;
+        totalHoras = 0;
         for (Materia materia : listaMateria)
-            totalHoras += materia.getCargaHoraria();
-        return totalHoras;
+            totalHoras = ( totalhoras + materia.getCargaHoraria() + (int)(0.25*materia.getCargaHoraria()) );
+
    } 
 }
 

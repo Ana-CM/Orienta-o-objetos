@@ -25,7 +25,7 @@ public class Aluno extends Pessoa{
     }
     public void calculaTotalHoras(){
         for(Materia m : listaMateria){
-            totalhoras = totalhoras + m.cargahoraria;
+            totalhoras = totalhoras + m.getCargaHoraria();
         }
     }
 }

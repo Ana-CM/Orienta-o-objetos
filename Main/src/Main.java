@@ -2,6 +2,7 @@ import form.AdicionarMateriaScreen;
 import form.EditarMateriaScreen;
 import form.materiaMainScreen;
 
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -14,6 +15,7 @@ public class Main {
 
     JFrame frame = new JFrame("Sistema Escola");
     private static List<Materia> materiaList = new ArrayList<>();
+    private static List<Professor> professorList = new ArrayList<>();
     private JPanel painelInicial;
     private JButton botaoListaAlunos;
     private JButton botaoListaProfessores;
@@ -22,11 +24,14 @@ public class Main {
     final static String MATERIAPAINEL = "Painel Materia";
     final static String ADDMATERIAPAINEL = "Painel Adicionar Materia";
     final static String EDITMATERIAPAINEL = "Painel Editar Materia";
+    final static String PROFESSORFORM = "Painel Professor";
 
     JPanel cards;
     materiaMainScreen MateriaPanel = new materiaMainScreen();
     AdicionarMateriaScreen AdicionarMateriaPanel = new AdicionarMateriaScreen();
     EditarMateriaScreen EditarMateriaPanel = new EditarMateriaScreen();
+    professorForm ProfessorForm = new professorForm();
+
     public Main(){
 
         MateriaPanel.getVoltarButton().addActionListener(new ActionListener() {
@@ -103,6 +108,13 @@ public class Main {
 
             }
         });
+
+        botaoListaProfessores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeScreen(PROFESSORFORM);
+            }
+        });
     }
     public void buildMateria(){
         String col[] = {"Nome", "Código", "Carga Horária"};
@@ -137,6 +149,8 @@ public class Main {
         cards.add(MateriaPanel.getMainPanel(), MATERIAPAINEL);
         cards.add(AdicionarMateriaPanel.getMainPanel(), ADDMATERIAPAINEL);
         cards.add(EditarMateriaPanel.getMainPanel(), EDITMATERIAPAINEL);
+        cards.add(ProfessorForm.getPainelPrincipal(),PROFESSORFORM);
+
         pane.add(cards, BorderLayout.CENTER);
     }
     public static void main(String[] args){
