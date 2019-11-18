@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+public class Main{
 
     JFrame frame = new JFrame("Sistema Escola");
     private static List<Materia> materiaList = new ArrayList<>();
@@ -22,11 +22,16 @@ public class Main {
     final static String MATERIAPAINEL = "Painel Materia";
     final static String ADDMATERIAPAINEL = "Painel Adicionar Materia";
     final static String EDITMATERIAPAINEL = "Painel Editar Materia";
-
+    final static String ALUNOPAINEL = "Painel Aluno";
+    final static String ADDALUNOPAINEL = "Painel Adicionar Aluno";
+    final static String EDITALUNOPAINEL = "Painel Editar Aluno";
     JPanel cards;
     materiaMainScreen MateriaPanel = new materiaMainScreen();
     AdicionarMateriaScreen AdicionarMateriaPanel = new AdicionarMateriaScreen();
     EditarMateriaScreen EditarMateriaPanel = new EditarMateriaScreen();
+    telaTodosAlunos TelaTodosAlunos = new telaTodosAlunos();
+    telaAdicionaAluno telaAdicionaAluno = new telaAdicionaAluno();
+
     public Main(){
 
         MateriaPanel.getVoltarButton().addActionListener(new ActionListener() {
@@ -103,6 +108,50 @@ public class Main {
 
             }
         });
+//        Alunos
+
+        botaoListaAlunos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeScreen(ALUNOPAINEL);
+
+
+            }
+        });
+
+        TelaTodosAlunos.getVoltarButtonAluno().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeScreen(PAINELINICIAL);
+            }
+        });
+
+        TelaTodosAlunos.getAdicionarAlunoButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeScreen(ADDALUNOPAINEL);
+
+                telaAdicionaAluno.getTextFieldCpfAluno().setText("");
+                telaAdicionaAluno.getTextFieldMatriculaAluno().setText("");
+                telaAdicionaAluno.getTextFieldNomeAluno().setText("");
+                telaAdicionaAluno.getTextFieldMatriculaAluno().setText("");
+            }
+        });
+
+
+
+        telaAdicionaAluno.getButtonAdicionarAluno().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                materiaList.add(new Materia(AdicionarMateriaPanel.getNomeTextField().getText(),
+                        AdicionarMateriaPanel.getCodigoTextField().getText(),
+                        Integer.parseInt(AdicionarMateriaPanel.getCargaTextField().getText())));
+                buildMateria();
+                changeScreen(MATERIAPAINEL);
+            }
+        });
+
+
     }
     public void buildMateria(){
         String col[] = {"Nome", "Código", "Carga Horária"};
@@ -137,6 +186,8 @@ public class Main {
         cards.add(MateriaPanel.getMainPanel(), MATERIAPAINEL);
         cards.add(AdicionarMateriaPanel.getMainPanel(), ADDMATERIAPAINEL);
         cards.add(EditarMateriaPanel.getMainPanel(), EDITMATERIAPAINEL);
+        cards.add(TelaTodosAlunos.getAlunoPainel(), ALUNOPAINEL);
+        cards.add(telaAdicionaAluno.getAddAlunoPainel(), ADDALUNOPAINEL);
         pane.add(cards, BorderLayout.CENTER);
     }
     public static void main(String[] args){
@@ -145,4 +196,7 @@ public class Main {
 
         build();
     }
+
+
+
 }

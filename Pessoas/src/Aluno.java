@@ -23,9 +23,11 @@ public class Aluno extends Pessoa{
     public String getMatricula(){
         return matricula;
     }
+
     public void calculaTotalHoras(){
+        int totalHoras = 0;
         for(Materia m : listaMateria){
-            totalhoras = totalhoras + m.cargahoraria;
+            totalhoras = totalhoras + m.getCargaHoraria();
         }
     }
 }
