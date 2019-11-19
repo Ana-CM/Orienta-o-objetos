@@ -1,6 +1,8 @@
+package formProfessor;
+
 import javax.swing.*;
 
-public class professorForm {
+public class professorMainScreen {
     private JButton voltarButton;
     private JButton adicionarProfessorButton;
     private JTable professorTable;

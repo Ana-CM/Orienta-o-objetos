@@ -1,6 +1,9 @@
 import form.AdicionarMateriaScreen;
 import form.EditarMateriaScreen;
 import form.materiaMainScreen;
+import formProfessor.AdicionarProfessorScreen;
+import formProfessor.EditarProfessorScreen;
+import formProfessor.professorMainScreen;
 
 
 import javax.swing.*;
@@ -24,13 +27,17 @@ public class Main {
     final static String MATERIAPAINEL = "Painel Materia";
     final static String ADDMATERIAPAINEL = "Painel Adicionar Materia";
     final static String EDITMATERIAPAINEL = "Painel Editar Materia";
-    final static String PROFESSORFORM = "Painel Professor";
+    final static String PROFESSORPAINEL = "Painel Professor";
+    final static String ADDPROFESSORPAINEL = "Painel Adicionar Professor";
+    final static String EDITPROFESSORPAINEL = "Painel Editar Professor";
 
     JPanel cards;
     materiaMainScreen MateriaPanel = new materiaMainScreen();
     AdicionarMateriaScreen AdicionarMateriaPanel = new AdicionarMateriaScreen();
     EditarMateriaScreen EditarMateriaPanel = new EditarMateriaScreen();
-    professorForm ProfessorForm = new professorForm();
+    professorMainScreen ProfessorPainel = new professorMainScreen();
+    AdicionarProfessorScreen AdicionarProfessorPainel = new AdicionarProfessorScreen();
+    EditarProfessorScreen EditarProfessorPainel = new EditarProfessorScreen();
 
     public Main(){
 
@@ -48,6 +55,7 @@ public class Main {
 
             }
         });
+
         MateriaPanel.getDeletarButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -112,9 +120,83 @@ public class Main {
         botaoListaProfessores.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                changeScreen(PROFESSORFORM);
+                changeScreen(PROFESSORPAINEL);
             }
         });
+
+        ProfessorPainel.getVoltarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeScreen(PAINELINICIAL);
+            }
+        });
+
+        ProfessorPainel.getDeletarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                professorList.remove(ProfessorPainel.getProfessorTable().getSelectedRow());
+                buildProfessor();
+            }
+        });
+
+        ProfessorPainel.getAdicionarProfessorButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeScreen(ADDPROFESSORPAINEL);
+                AdicionarProfessorPainel.getC_nome().setText("");
+                AdicionarProfessorPainel.getC_cpf().setText("");
+                AdicionarProfessorPainel.getC_dataNascimento().setText("");
+                AdicionarProfessorPainel.getC_departamento().setText("");
+
+            }
+        });
+        AdicionarProfessorPainel.getVoltarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeScreen(PROFESSORPAINEL);
+            }
+        });
+        AdicionarProfessorPainel.getAdicionarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                professorList.add(new Professor(AdicionarProfessorPainel.getC_nome().getText(),
+                        AdicionarProfessorPainel.getC_cpf().getText(),
+                        Integer.parseInt(AdicionarMateriaPanel.getCargaTextField().getText())));
+                buildMateria();
+                changeScreen(MATERIAPAINEL);
+            }
+        });
+        MateriaPanel.getEditarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeScreen(EDITMATERIAPAINEL);
+                EditarMateriaPanel.getNomeTextField().setText(materiaList.get(MateriaPanel.getMateriaTable().getSelectedRow()).getNome());
+                EditarMateriaPanel.getCodigoTextField().setText(materiaList.get(MateriaPanel.getMateriaTable().getSelectedRow()).getCodigo());
+                EditarMateriaPanel.getCargaTextField().setText(Integer.toString(materiaList.get((MateriaPanel.getMateriaTable().getSelectedRow())).getCargaHoraria()));
+
+            }
+        });
+        EditarMateriaPanel.getVoltarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeScreen(MATERIAPAINEL);
+            }
+        });
+        EditarMateriaPanel.getEditarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                materiaList.set(MateriaPanel.getMateriaTable().getSelectedRow(),
+                        new Materia(EditarMateriaPanel.getNomeTextField().getText(),
+                                EditarMateriaPanel.getCodigoTextField().getText(),
+                                Integer.parseInt(EditarMateriaPanel.getCargaTextField().getText())));
+                buildMateria();
+                changeScreen(MATERIAPAINEL);
+
+            }
+        });
+
+
+
     }
     public void buildMateria(){
         String col[] = {"Nome", "Código", "Carga Horária"};
@@ -149,7 +231,7 @@ public class Main {
         cards.add(MateriaPanel.getMainPanel(), MATERIAPAINEL);
         cards.add(AdicionarMateriaPanel.getMainPanel(), ADDMATERIAPAINEL);
         cards.add(EditarMateriaPanel.getMainPanel(), EDITMATERIAPAINEL);
-        cards.add(ProfessorForm.getPainelPrincipal(),PROFESSORFORM);
+        cards.add(ProfessorPainel.getPainelPrincipal(), PROFESSORPAINEL);
 
         pane.add(cards, BorderLayout.CENTER);
     }
