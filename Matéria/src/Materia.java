@@ -18,4 +18,9 @@ public class Materia {
     public int getCargaHoraria(){
         return cargaHoraria;
     }
+
+    @Override
+    public String toString () {
+        return new String ( this.getCodigo()  + " - " + this.getNome() );
+    }
 }

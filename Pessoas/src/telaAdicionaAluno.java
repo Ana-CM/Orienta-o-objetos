@@ -5,7 +5,7 @@ public class telaAdicionaAluno {
     private JPanel addAlunoTopoPainel;
     private JPanel addAlunoCentroPainel;
     private JPanel addAlunoInferiorPainel;
-    private JButton buttonVoltarAddAluno;
+    private JButton voltarAddAluno;
     private JButton buttonAdicionarAluno;
     private JTextField textFieldNomeAluno;
     private JTextField textFieldCpfAluno;
@@ -14,7 +14,6 @@ public class telaAdicionaAluno {
     private JComboBox diaAluno;
     private JComboBox mesAluno;
     private JComboBox anoAluno;
-    private JButton voltarAddAluno;
 
     public JPanel getAddAlunoPainel() {
         return addAlunoPainel;
@@ -48,12 +47,12 @@ public class telaAdicionaAluno {
         this.addAlunoInferiorPainel = addAlunoInferiorPainel;
     }
 
-    public JButton getButtonVoltarAddAluno() {
-        return buttonVoltarAddAluno;
+    public JButton getVoltarAddAluno() {
+        return voltarAddAluno;
     }
 
-    public void setButtonVoltarAddAluno(JButton buttonVoltarAddAluno) {
-        this.buttonVoltarAddAluno = buttonVoltarAddAluno;
+    public void setVoltarAddAluno(JButton voltarAddAluno) {
+        this.voltarAddAluno = voltarAddAluno;
     }
 
     public JButton getButtonAdicionarAluno() {
@@ -96,7 +95,27 @@ public class telaAdicionaAluno {
         this.textFieldMatriculaAluno = textFieldMatriculaAluno;
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
+    public JComboBox getDiaAluno() {
+        return diaAluno;
+    }
+
+    public void setDiaAluno(JComboBox diaAluno) {
+        this.diaAluno = diaAluno;
+    }
+
+    public JComboBox getMesAluno() {
+        return mesAluno;
+    }
+
+    public void setMesAluno(JComboBox mesAluno) {
+        this.mesAluno = mesAluno;
+    }
+
+    public JComboBox getAnoAluno() {
+        return anoAluno;
+    }
+
+    public void setAnoAluno(JComboBox anoAluno) {
+        this.anoAluno = anoAluno;
     }
 }

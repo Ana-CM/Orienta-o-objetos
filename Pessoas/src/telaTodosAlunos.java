@@ -9,6 +9,15 @@ public class telaTodosAlunos {
     private JButton deletarButton;
     private JPanel painelTopoAluno;
     private JPanel painelAlunoLateral;
+    private JButton visualizarAlunoButton;
+
+    public JButton getVisualizarAlunoButton() {
+        return visualizarAlunoButton;
+    }
+
+    public void setVisualizarAlunoButton(JButton visualizarAlunoButton) {
+        this.visualizarAlunoButton = visualizarAlunoButton;
+    }
 
     public JPanel getAlunoPainel() {
         return AlunoPainel;
