@@ -1,12 +1,14 @@
 import form.AdicionarMateriaScreen;
 import form.EditarMateriaScreen;
 import form.materiaMainScreen;
+import sun.awt.geom.AreaOp;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.SocketPermission;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -191,7 +193,10 @@ public class Main{
                Aluno a = (Aluno) AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow());
 
                    List<Materia> materiasAluno = new ArrayList<>();
-                   materiasAluno =  materiaList;
+
+                    for (int i = 0; i < materiaList.size(); i++) {
+                        materiasAluno.add(materiaList.get(i));
+                    }
 
                     for (int i = 0; i < a.getListaMateria().size(); i++) {
                         materiasAluno.remove(a.getListaMateria().get(i));
@@ -213,12 +218,20 @@ public class Main{
 
         TelaTodosAlunos.getVisualizarAlunoButton().addActionListener(new ActionListener() {
             @Override
+
             public void actionPerformed(ActionEvent e) {
+
+                Aluno a = (Aluno) AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow());
                 changeScreen(ALUNOINDIVIDUALPAINEL);
+                TelaUmAluno.getAlunoIndividualMateriasCB().removeAllItems();
                 TelaUmAluno.getAlunoIndividualNome().setText(AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow()).getNome());
                 TelaUmAluno.getAlunoINdividualCpf().setText(AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow()).getCPF());
                 TelaUmAluno.getAlunoIndividualMatricula().setText(AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow()).getMatricula());
                 TelaUmAluno.getAlunoIndividualData().setText(AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow()).getDataNascimento());
+
+                for(int i = 0; i < a.getListaMateria().size(); i++){
+                    TelaUmAluno.getAlunoIndividualMateriasCB().addItem(a.getListaMateria().get(i).toString());
+                }
             }
         });
 
@@ -226,6 +239,8 @@ public class Main{
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeScreen(EDITALUNOPAINEL);
+                Aluno a = (Aluno) AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow());
+                TelaEditaAluno.getAlunoEditaMateriasCB().removeAllItems();
                 TelaEditaAluno.getTextFieldCpfAlunoedita().setText(AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow()).getCPF());
                 TelaEditaAluno.getTextFieldMatriculaAlunoedita().setText(AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow()).getMatricula());
                 TelaEditaAluno.getTextFieldNomeAlunoedita().setText(AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow()).getNome());
@@ -240,12 +255,23 @@ public class Main{
                 TelaEditaAluno.getMesAlunoedita().setSelectedItem(Integer.parseInt(mes));
                 TelaEditaAluno.getAnoAlunoedita().setSelectedItem(Integer.parseInt(ano));
 
+                for(int i = 0; i < a.getListaMateria().size(); i++){
+                    TelaEditaAluno.getAlunoEditaMateriasCB().addItem(a.getListaMateria().get(i).toString());
+                }
+
             }
         });
 
         TelaEditaAluno.getButtonSalvarAluno().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Aluno a = (Aluno) AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow());
+                List<Materia> materias = new ArrayList<>();
+
+                for (int i = 0; i < a.getListaMateria().size(); i++) {
+                    materias.add(a.getListaMateria().get(i));
+                }
+
                 AlunoList.set(TelaTodosAlunos.getAlunoTable1().getSelectedRow(),
                         new Aluno(TelaEditaAluno.getTextFieldNomeAlunoedita().getText(),
                         TelaEditaAluno.getTextFieldCpfAlunoedita().getText(),
@@ -255,10 +281,11 @@ public class Main{
                                 TelaEditaAluno.getAnoAlunoedita().getSelectedItem().toString()
                         ));
 
-                        buildAluno();
-                        changeScreen(ALUNOPAINEL);
+                buildAluno();
+                changeScreen(ALUNOPAINEL);
             }
         });
+
 
 
         TelaUmAluno.getVoltarIndividualAluno().addActionListener(new ActionListener() {
@@ -341,8 +368,6 @@ public class Main{
         }
     }
 
-    public void exibeListaMateria(){
 
-    }
 }
 
