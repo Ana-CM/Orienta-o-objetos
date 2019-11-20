@@ -531,51 +531,48 @@ public class Main{
                 changeScreen(PROFESSORPAINEL);
             }
         });
-        
-        //batata
-        TelaEditaAluno.getButtonSalvarAluno().addActionListener(new ActionListener() {
+
+        TelaEditaProfessor.getButtonSalvaProf().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Aluno b = (Aluno) AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow());
+                Professor b = (Professor) ProfessorList.get(TelaTodosProfessores.getProfTable1().getSelectedRow());
                 List<Materia> materias = new ArrayList<>();
 
                 for (int i = 0; i < b.getListaMateria().size(); i++) {
-                    materias.add(b.getListaMateria().get(i));
+                materias.add(b.getListaMateria().get(i));
                 }
-                Aluno a = new Aluno(TelaEditaAluno.getTextFieldNomeAlunoedita().getText(),
-                        TelaEditaAluno.getTextFieldCpfAlunoedita().getText(),
-                        TelaEditaAluno.getTextFieldMatriculaAlunoedita().getText(),
-                        TelaEditaAluno.getDiaAlunoedita().getSelectedItem().toString() + "/" +
-                                TelaEditaAluno.getMesAlunoedita().getSelectedItem().toString() +"/"+
-                                TelaEditaAluno.getAnoAlunoedita().getSelectedItem().toString(),
-                        materias);
 
-                if(!(a.getNome().isEmpty() || a.getCPF().isEmpty() || a.getMatricula().isEmpty())) {
+
+                Professor p = new Professor( TelaEditaProfessor.getTextFieldNomeProfessoredita().getText(),
+                        TelaEditaProfessor.getTextFieldCpfProfedita().getText(),
+                        TelaEditaProfessor.getTextFieldDeptProfedita().getText(),
+                        TelaEditaProfessor.getDiaProfedita().getSelectedItem().toString() + "/" +
+                                TelaEditaProfessor.getMesProfedita().getSelectedItem().toString() + "/" +
+                                TelaEditaProfessor.getAnoProfedita().getSelectedItem().toString(), materias);
+
+                if(!(p.getNome().isEmpty() || p.getCPF().isEmpty() || p.getDepartamento().isEmpty())) {
                     Pattern pattern = Pattern.compile("[0-9]");
                     Pattern letras = Pattern.compile(("[a-z]"));
-                    Matcher nome = pattern.matcher(a.getNome());
-                    Matcher cpf = pattern.matcher(a.getCPF());
-                    Matcher cpfLetras = letras.matcher(a.getCPF());
+                    Matcher nome = pattern.matcher(p.getNome());
+                    Matcher cpf = pattern.matcher(p.getCPF());
+                    Matcher cpfLetras = letras.matcher(p.getCPF());
 
-                    if( ( !nome.find() && a.getNome().length() > 3)){
-                        if(cpf.find()&&a.getCPF().length()==11&&!cpfLetras.find()){
-                            AlunoList.set(TelaTodosAlunos.getAlunoTable1().getSelectedRow(),
-                                    new Aluno(TelaEditaAluno.getTextFieldNomeAlunoedita().getText(),
-                                            TelaEditaAluno.getTextFieldCpfAlunoedita().getText(),
-                                            TelaEditaAluno.getTextFieldMatriculaAlunoedita().getText(),
-                                            TelaEditaAluno.getDiaAlunoedita().getSelectedItem().toString() + "/" +
-                                                    TelaEditaAluno.getMesAlunoedita().getSelectedItem().toString() +"/"+
-                                                    TelaEditaAluno.getAnoAlunoedita().getSelectedItem().toString(),
-                                            materias
-                                    ));
-                            buildAluno();
-                            changeScreen(ALUNOPAINEL);
-                        }else { JOptionPane.showMessageDialog(null, "Insira um CPF Valido! "); }
-                    }else { JOptionPane.showMessageDialog(null, "Insira um nome Valido! ");}
-                }else{ JOptionPane.showMessageDialog(null, "Preencha todos os campos! "); }
+                   if( ( !nome.find() && p.getNome().length() > 3)){
+                        if(cpf.find()&&p.getCPF().length()==11&&!cpfLetras.find()){
+                            ProfessorList.set(TelaTodosProfessores.getProfTable1().getSelectedRow(),
+                                    new Professor( TelaEditaProfessor.getTextFieldNomeProfessoredita().getText(),
+                                            TelaEditaProfessor.getTextFieldCpfProfedita().getText(),
+                                            TelaEditaProfessor.getTextFieldDeptProfedita().getText(),
+                                            TelaEditaProfessor.getDiaProfedita().getSelectedItem().toString() + "/" +
+                                                    TelaEditaProfessor.getMesProfedita().getSelectedItem().toString() + "/" +
+                                                    TelaEditaProfessor.getAnoProfedita().getSelectedItem().toString(), materias));
+                                                        buildProfessor();
+                                                        changeScreen(PROFESSORPAINEL);
+                            }else { JOptionPane.showMessageDialog(null, "Insira um CPF Valido! "); }
+                       }else { JOptionPane.showMessageDialog(null, "Insira um nome Valido! ");}
+               }else{ JOptionPane.showMessageDialog(null, "Preencha todos os campos! "); }
             }
         });
-
     }
 
     public void buildMateria(){
