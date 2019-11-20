@@ -25,6 +25,7 @@ public class Aluno extends Pessoa{
     public void removeMateria(Materia materia){
         this.listaMateria.remove(materia);
     }
+
     public String getMatricula(){
         return matricula;
     }
