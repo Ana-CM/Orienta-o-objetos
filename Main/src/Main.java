@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.net.SocketPermission;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main{
 
@@ -167,16 +170,31 @@ public class Main{
                 if(!telaAdicionaAluno.getTextFieldNomeAluno().getText().equals("") &&
                 !telaAdicionaAluno.getTextFieldCpfAluno().getText().equals("") &&
                 !telaAdicionaAluno.getTextFieldMatriculaAluno().getText().equals("")){
-                    AlunoList.add(new Aluno(telaAdicionaAluno.getTextFieldNomeAluno().getText(),
-                            telaAdicionaAluno.getTextFieldCpfAluno().getText(),
-                            telaAdicionaAluno.getTextFieldMatriculaAluno().getText(),
-                            telaAdicionaAluno.getDiaAluno().getSelectedItem().toString() + "/" +
-                            telaAdicionaAluno.getMesAluno().getSelectedItem().toString() +"/"+
-                            telaAdicionaAluno.getAnoAluno().getSelectedItem().toString(), materias));
+                     Aluno a = new Aluno(telaAdicionaAluno.getTextFieldNomeAluno().getText(),
+                             telaAdicionaAluno.getTextFieldCpfAluno().getText(),
+                             telaAdicionaAluno.getTextFieldMatriculaAluno().getText(),
+                             telaAdicionaAluno.getDiaAluno().getSelectedItem().toString() + "/" +
+                                     telaAdicionaAluno.getMesAluno().getSelectedItem().toString() +"/"+
+                                     telaAdicionaAluno.getAnoAluno().getSelectedItem().toString(), materias);
+                     Pattern pattern = Pattern.compile("[0-9]");
+                     Pattern letras = Pattern.compile(("[a-z]"));
+                     Matcher nome = pattern.matcher(a.getNome());
+                     Matcher cpf = pattern.matcher(a.getCPF());
+                     Matcher cpfLetras = letras.matcher(a.getCPF());
 
-                    buildAluno();
-                    changeScreen(ALUNOPAINEL);
-                }
+                    if( ( !nome.find() && a.getNome().length() > 3)){
+                        if( cpf.find() && a.getCPF().length() == 11 && !cpfLetras.find() ){
+                            AlunoList.add(new Aluno(telaAdicionaAluno.getTextFieldNomeAluno().getText(),
+                                    telaAdicionaAluno.getTextFieldCpfAluno().getText(),
+                                    telaAdicionaAluno.getTextFieldMatriculaAluno().getText(),
+                                    telaAdicionaAluno.getDiaAluno().getSelectedItem().toString() + "/" +
+                                            telaAdicionaAluno.getMesAluno().getSelectedItem().toString() +"/"+
+                                            telaAdicionaAluno.getAnoAluno().getSelectedItem().toString(), materias));
+                            buildAluno();
+                            changeScreen(ALUNOPAINEL);
+                        }else { JOptionPane.showMessageDialog(null, "Insira um CPF Valido! "); }
+                    }else { JOptionPane.showMessageDialog(null, "Insira um nome Valido! ");}
+                }else{ JOptionPane.showMessageDialog(null, "Preencha todos os campos! "); }
             }
         });
 
@@ -278,27 +296,44 @@ public class Main{
         TelaEditaAluno.getButtonSalvarAluno().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Aluno a = (Aluno) AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow());
+                Aluno b = (Aluno) AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow());
                 List<Materia> materias = new ArrayList<>();
 
-                for (int i = 0; i < a.getListaMateria().size(); i++) {
-                    materias.add(a.getListaMateria().get(i));
+                for (int i = 0; i < b.getListaMateria().size(); i++) {
+                    materias.add(b.getListaMateria().get(i));
                 }
-
-                AlunoList.set(TelaTodosAlunos.getAlunoTable1().getSelectedRow(),
-                        new Aluno(TelaEditaAluno.getTextFieldNomeAlunoedita().getText(),
+                Aluno a = new Aluno(TelaEditaAluno.getTextFieldNomeAlunoedita().getText(),
                         TelaEditaAluno.getTextFieldCpfAlunoedita().getText(),
                         TelaEditaAluno.getTextFieldMatriculaAlunoedita().getText(),
                         TelaEditaAluno.getDiaAlunoedita().getSelectedItem().toString() + "/" +
                                 TelaEditaAluno.getMesAlunoedita().getSelectedItem().toString() +"/"+
                                 TelaEditaAluno.getAnoAlunoedita().getSelectedItem().toString(),
-                                materias
-                        ));
-                buildAluno();
-               // AlunoList.get(TelaEditaAluno.getAlunoEditaMateriasCB().getSelectedIndex()).setListaMateria(materias);
-                changeScreen(ALUNOPAINEL);
-            }
+                        materias);
 
+                if(!(a.getNome().isEmpty() || a.getCPF().isEmpty() || a.getMatricula().isEmpty())) {
+                    Pattern pattern = Pattern.compile("[0-9]");
+                    Pattern letras = Pattern.compile(("[a-z]"));
+                    Matcher nome = pattern.matcher(a.getNome());
+                    Matcher cpf = pattern.matcher(a.getCPF());
+                    Matcher cpfLetras = letras.matcher(a.getCPF());
+
+                    if( ( !nome.find() && a.getNome().length() > 3)){
+                        if(cpf.find()&&a.getCPF().length()==11&&!cpfLetras.find()){
+                            AlunoList.set(TelaTodosAlunos.getAlunoTable1().getSelectedRow(),
+                            new Aluno(TelaEditaAluno.getTextFieldNomeAlunoedita().getText(),
+                            TelaEditaAluno.getTextFieldCpfAlunoedita().getText(),
+                            TelaEditaAluno.getTextFieldMatriculaAlunoedita().getText(),
+                            TelaEditaAluno.getDiaAlunoedita().getSelectedItem().toString() + "/" +
+                            TelaEditaAluno.getMesAlunoedita().getSelectedItem().toString() +"/"+
+                            TelaEditaAluno.getAnoAlunoedita().getSelectedItem().toString(),
+                            materias
+                            ));
+                            buildAluno();
+                            changeScreen(ALUNOPAINEL);
+                        }else { JOptionPane.showMessageDialog(null, "Insira um CPF Valido! "); }
+                    }else { JOptionPane.showMessageDialog(null, "Insira um nome Valido! ");}
+                }else{ JOptionPane.showMessageDialog(null, "Preencha todos os campos! "); }
+            }
         });
 
         TelaUmAluno.getVoltarIndividualAluno().addActionListener(new ActionListener() {
@@ -359,9 +394,10 @@ public class Main{
         pane.add(cards, BorderLayout.CENTER);
     }
     public static void main(String[] args){
+        List<Materia> lista = new ArrayList<>();
         materiaList.add(new Materia("Nome", "02", 04));
         materiaList.add(new Materia("Nome2", "03", 04));
-       // AlunoList.add(new Aluno("Pedro", "085", "2012AB", "10/06/2004"));
+        AlunoList.add(new Aluno("Pedro", "08556780716", "2012AB", "10/06/2004", lista));
         build();
     }
 
