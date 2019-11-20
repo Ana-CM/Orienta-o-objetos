@@ -1,6 +1,7 @@
 import form.AdicionarMateriaScreen;
 import form.EditarMateriaScreen;
 import form.materiaMainScreen;
+import form.umaMateria;
 import sun.awt.geom.AreaOp;
 
 import javax.swing.*;
@@ -29,6 +30,7 @@ public class Main{
     final static String MATERIAPAINEL = "Painel Materia";
     final static String ADDMATERIAPAINEL = "Painel Adicionar Materia";
     final static String EDITMATERIAPAINEL = "Painel Editar Materia";
+    final static String MATERIAINDIVIDUAL = "Painel uma Materia";
     final static String ALUNOPAINEL = "Painel Aluno";
     final static String ADDALUNOPAINEL = "Painel Adicionar Aluno";
     final static String EDITALUNOPAINEL = "Painel Editar Aluno";
@@ -42,6 +44,7 @@ public class Main{
     materiaMainScreen MateriaPanel = new materiaMainScreen();
     AdicionarMateriaScreen AdicionarMateriaPanel = new AdicionarMateriaScreen();
     EditarMateriaScreen EditarMateriaPanel = new EditarMateriaScreen();
+    umaMateria telaIndividualMateria = new umaMateria();
     telaTodosAlunos TelaTodosAlunos = new telaTodosAlunos();
     telaAdicionaAluno telaAdicionaAluno = new telaAdicionaAluno();
     telaEditaAluno TelaEditaAluno = new telaEditaAluno();
@@ -65,7 +68,6 @@ public class Main{
             public void actionPerformed(ActionEvent e) {
                 changeScreen(MATERIAPAINEL);
                 buildMateria();
-
             }
         });
         MateriaPanel.getDeletarButton().addActionListener(new ActionListener() {
@@ -90,16 +92,22 @@ public class Main{
                 changeScreen(MATERIAPAINEL);
             }
         });
+
         AdicionarMateriaPanel.getAdicionarButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                materiaList.add(new Materia(AdicionarMateriaPanel.getNomeTextField().getText(),
-                        AdicionarMateriaPanel.getCodigoTextField().getText(),
-                        Integer.parseInt(AdicionarMateriaPanel.getCargaTextField().getText())));
-                buildMateria();
-                changeScreen(MATERIAPAINEL);
+                if( !AdicionarMateriaPanel.getNomeTextField().getText().equals("") &&
+                !AdicionarMateriaPanel.getCodigoTextField().getText().equals("") &&
+                !AdicionarMateriaPanel.getCargaTextField().getText().equals("")){
+                    materiaList.add(new Materia(AdicionarMateriaPanel.getNomeTextField().getText(),
+                            AdicionarMateriaPanel.getCodigoTextField().getText(),
+                            Integer.parseInt(AdicionarMateriaPanel.getCargaTextField().getText())));
+                    buildMateria();
+                    changeScreen(MATERIAPAINEL);
+                }else{ JOptionPane.showMessageDialog(null, "Preencha todos os campos! "); }
             }
         });
+
         MateriaPanel.getEditarButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -116,16 +124,39 @@ public class Main{
                 changeScreen(MATERIAPAINEL);
             }
         });
+
         EditarMateriaPanel.getEditarButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                materiaList.set(MateriaPanel.getMateriaTable().getSelectedRow(),
-                        new Materia(EditarMateriaPanel.getNomeTextField().getText(),
-                                EditarMateriaPanel.getCodigoTextField().getText(),
-                                Integer.parseInt(EditarMateriaPanel.getCargaTextField().getText())));
-                buildMateria();
-                changeScreen(MATERIAPAINEL);
+                if(!EditarMateriaPanel.getNomeTextField().getText().equals("")&&
+                !EditarMateriaPanel.getCodigoTextField().getText().equals("") &&
+                !EditarMateriaPanel.getCargaTextField().getText().equals("")){
+                    materiaList.set(MateriaPanel.getMateriaTable().getSelectedRow(),
+                            new Materia(EditarMateriaPanel.getNomeTextField().getText(),
+                                    EditarMateriaPanel.getCodigoTextField().getText(),
+                                    Integer.parseInt(EditarMateriaPanel.getCargaTextField().getText())));
+                    buildMateria();
+                    changeScreen(MATERIAPAINEL);
+                }else{ JOptionPane.showMessageDialog(null, "Preencha todos os campos! "); }
+            }
+        });
 
+        MateriaPanel.getVisualizarButtonMateria().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Materia m = (Materia) materiaList.get(MateriaPanel.getMateriaTable().getSelectedRow());
+                changeScreen(MATERIAINDIVIDUAL);
+                telaIndividualMateria.getMateriaIndividualNome().setText(materiaList.get(MateriaPanel.getMateriaTable().getSelectedRow()).getNome());
+                telaIndividualMateria.getMateriaIndividualCodigo().setText(materiaList.get(MateriaPanel.getMateriaTable().getSelectedRow()).getCodigo());
+                String horas = Integer.toString( materiaList.get(MateriaPanel.getMateriaTable().getSelectedRow()).getCargaHoraria());
+                telaIndividualMateria.getCargaHorariaIndividual().setText(horas);
+            }
+        });
+
+        telaIndividualMateria.getVoltarIndividualMateria().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeScreen(MATERIAPAINEL);
             }
         });
 //        Alunos
@@ -491,6 +522,8 @@ public class Main{
                 TelaUmProf.getProfIndividualDepartamento().setText(ProfessorList.get(TelaTodosProfessores.getProfTable1().getSelectedRow()).getDepartamento());
                 TelaUmProf.getProfIndividualData().setText(ProfessorList.get(TelaTodosProfessores.getProfTable1().getSelectedRow()).getDataNascimento());
                 TelaUmProf.getProfHoras().setText(ProfessorList.get(TelaTodosProfessores.getProfTable1().getSelectedRow()).calculaTotalHoras());
+                String salario =Double.toString(ProfessorList.get(TelaTodosProfessores.getProfTable1().getSelectedRow()).salario());
+                TelaUmProf.getSalario().setText(salario);
 
                 for(int i = 0; i < p.getListaMateria().size(); i++){
                     TelaUmProf.getProfIndividualMateriasCB().addItem(p.getListaMateria().get(i).toString());
@@ -628,6 +661,7 @@ public class Main{
         cards.add(MateriaPanel.getMainPanel(), MATERIAPAINEL);
         cards.add(AdicionarMateriaPanel.getMainPanel(), ADDMATERIAPAINEL);
         cards.add(EditarMateriaPanel.getMainPanel(), EDITMATERIAPAINEL);
+        cards.add(telaIndividualMateria.getUmaMateria(), MATERIAINDIVIDUAL);
         cards.add(TelaTodosAlunos.getAlunoPainel(), ALUNOPAINEL);
         cards.add(telaAdicionaAluno.getAddAlunoPainel(), ADDALUNOPAINEL);
         cards.add(TelaEditaAluno.getPainelEditaAluno(), EDITALUNOPAINEL);
@@ -636,6 +670,7 @@ public class Main{
         cards.add(telaAdicionaProfessor.getPainelProfessor(), ADDPROFESSORPAINEL);
         cards.add(TelaEditaProfessor.getJprofessorEdita(), EDITAPROFESSORPAINEL);
         cards.add(TelaUmProf.getUmProf(), PROFESSORINDIVIDUALPAINEL);
+
         pane.add(cards, BorderLayout.CENTER);
     }
     public static void main(String[] args){

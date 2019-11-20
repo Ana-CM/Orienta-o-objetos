@@ -14,9 +14,18 @@ public class telaUmProf {
     private JLabel profIndividualDepartamento;
     private JLabel CargaHorariprof;
     private JLabel profHoras;
+    private JLabel salario;
 
     public JPanel getUmProf() {
         return umProf;
+    }
+
+    public JLabel getSalario() {
+        return salario;
+    }
+
+    public void setSalario(JLabel salario) {
+        this.salario = salario;
     }
 
     public void setUmProf(JPanel umProf) {

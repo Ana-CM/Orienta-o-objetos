@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-public class Professor extends Pessoa{
+public class Professor extends Pessoa implements salario {
 
    private String departamento;
    private List <Materia> listaMateria = new ArrayList<>();
@@ -51,6 +51,17 @@ public class Professor extends Pessoa{
         for (Materia materia : listaMateria)
             totalHoras += materia.getCargaHoraria()+1.2;
         return Float.toString(totalHoras);
+    }
+
+    @Override
+    public double salario() {
+        int totalHoras = 0;
+        double salario = 0;
+        for (Materia materia : listaMateria){
+            totalHoras += materia.getCargaHoraria()+1.2;
+        }
+        salario = totalHoras*40.1;
+        return salario;
     }
 }
 

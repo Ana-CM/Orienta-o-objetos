@@ -16,6 +16,15 @@ public class materiaMainScreen {
     private JButton editarButton;
     private JButton deletarButton;
     private JPanel rightPanel;
+    private JButton visualizarButtonMateria;
+
+    public JButton getVisualizarButtonMateria() {
+        return visualizarButtonMateria;
+    }
+
+    public void setVisualizarButtonMateria(JButton visualizarButtonMateria) {
+        this.visualizarButtonMateria = visualizarButtonMateria;
+    }
 
     public void atualizaCardList(){
 
