@@ -6,13 +6,19 @@ public class Aluno extends Pessoa{
     private String matricula;
     private List<Materia> listaMateria = new ArrayList<>();
 
-    public Aluno(String nome, String CPF, String matricula, String dataNascimento){
+    public Aluno(String nome, String CPF, String matricula, String dataNascimento, List<Materia> listaMateria){
         super(nome, CPF, dataNascimento);
         this.matricula = matricula;
+        this.listaMateria=listaMateria;
     }
     public List<Materia> getListaMateria(){
         return listaMateria;
     }
+
+    public void setListaMateria(List<Materia> listaMateria) {
+        this.listaMateria = listaMateria;
+    }
+
     public void addMateria(Materia materia){
         listaMateria.add(materia);
     }
@@ -23,10 +29,13 @@ public class Aluno extends Pessoa{
         return matricula;
     }
 
-    public void calculaTotalHoras(){
-        int totalHoras = 0;
+    public String calculaTotalHoras(){
+        int horas = 0;
+
         for(Materia m : listaMateria){
-            totalhoras = totalhoras + m.getCargaHoraria();
+            horas = horas + m.getCargaHoraria();
         }
+
+        return Integer.toString(horas);
     }
 }

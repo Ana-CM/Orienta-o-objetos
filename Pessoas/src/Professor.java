@@ -29,12 +29,13 @@ public class Professor extends Pessoa{
       return departamento;
    }
 
-   public void calculaTotalHoras(){
+   public String calculaTotalHoras(){
     // método para calcular o total de horas, somando toda a carga       //horária das matérias lecionada  mais o horário de atendimento
     int totalHoras = 0;
         for (Materia materia : listaMateria)
-            totalHoras += materia.getCargaHoraria();
-   } 
+            totalHoras += materia.getCargaHoraria()+1.2;
+       return Float.toString(totalHoras);
+   }
 }
 
 

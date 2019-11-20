@@ -163,6 +163,7 @@ public class Main{
         telaAdicionaAluno.getButtonAdicionarAluno().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                List<Materia> materias = new ArrayList<>();
                 if(!telaAdicionaAluno.getTextFieldNomeAluno().getText().equals("") &&
                 !telaAdicionaAluno.getTextFieldCpfAluno().getText().equals("") &&
                 !telaAdicionaAluno.getTextFieldMatriculaAluno().getText().equals("")){
@@ -171,7 +172,7 @@ public class Main{
                             telaAdicionaAluno.getTextFieldMatriculaAluno().getText(),
                             telaAdicionaAluno.getDiaAluno().getSelectedItem().toString() + "/" +
                             telaAdicionaAluno.getMesAluno().getSelectedItem().toString() +"/"+
-                            telaAdicionaAluno.getAnoAluno().getSelectedItem().toString()));
+                            telaAdicionaAluno.getAnoAluno().getSelectedItem().toString(), materias));
 
                     buildAluno();
                     changeScreen(ALUNOPAINEL);
@@ -215,6 +216,17 @@ public class Main{
         });
 
 
+        TelaEditaAluno.getRemoverMateriaAlunoEdita().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Aluno a = (Aluno) AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow());
+                if(TelaEditaAluno.getAlunoEditaMateriasCB().getItemAt(0) != ""){
+                    Materia m = a.getListaMateria().get(TelaEditaAluno.getAlunoEditaMateriasCB().getSelectedIndex());
+                    a.removeMateria(m);
+                    TelaEditaAluno.getAlunoEditaMateriasCB().removeItem(m.toString());
+                }
+            }
+        });
 
         TelaTodosAlunos.getVisualizarAlunoButton().addActionListener(new ActionListener() {
             @Override
@@ -228,6 +240,7 @@ public class Main{
                 TelaUmAluno.getAlunoINdividualCpf().setText(AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow()).getCPF());
                 TelaUmAluno.getAlunoIndividualMatricula().setText(AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow()).getMatricula());
                 TelaUmAluno.getAlunoIndividualData().setText(AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow()).getDataNascimento());
+                TelaUmAluno.getAlunoHoras().setText(AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow()).calculaTotalHoras());
 
                 for(int i = 0; i < a.getListaMateria().size(); i++){
                     TelaUmAluno.getAlunoIndividualMateriasCB().addItem(a.getListaMateria().get(i).toString());
@@ -238,8 +251,8 @@ public class Main{
         TelaTodosAlunos.getEditarButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                changeScreen(EDITALUNOPAINEL);
                 Aluno a = (Aluno) AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow());
+                changeScreen(EDITALUNOPAINEL);
                 TelaEditaAluno.getAlunoEditaMateriasCB().removeAllItems();
                 TelaEditaAluno.getTextFieldCpfAlunoedita().setText(AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow()).getCPF());
                 TelaEditaAluno.getTextFieldMatriculaAlunoedita().setText(AlunoList.get(TelaTodosAlunos.getAlunoTable1().getSelectedRow()).getMatricula());
@@ -278,15 +291,15 @@ public class Main{
                         TelaEditaAluno.getTextFieldMatriculaAlunoedita().getText(),
                         TelaEditaAluno.getDiaAlunoedita().getSelectedItem().toString() + "/" +
                                 TelaEditaAluno.getMesAlunoedita().getSelectedItem().toString() +"/"+
-                                TelaEditaAluno.getAnoAlunoedita().getSelectedItem().toString()
+                                TelaEditaAluno.getAnoAlunoedita().getSelectedItem().toString(),
+                                materias
                         ));
-
                 buildAluno();
+               // AlunoList.get(TelaEditaAluno.getAlunoEditaMateriasCB().getSelectedIndex()).setListaMateria(materias);
                 changeScreen(ALUNOPAINEL);
             }
+
         });
-
-
 
         TelaUmAluno.getVoltarIndividualAluno().addActionListener(new ActionListener() {
             @Override
@@ -310,7 +323,7 @@ public class Main{
         String col[] = {"Nome", "CPF", "Matricula", "Data de Nascimento"};
         DefaultTableModel model = new DefaultTableModel(new Object[]{"Nome", "CPF", "Matricula", "Data de Nascimento"}, 0);
         for(Aluno p: AlunoList){
-            Object[] objs = {p.getNome(), p.getCPF(), p.getMatricula(), p.getDataNascimento()};
+            Object[] objs = {p.getNome(), p.getCPF(), p.getMatricula(), p.getDataNascimento(), p.getListaMateria()};
             model.addRow(objs);
         }
         TelaTodosAlunos.getAlunoTable1().setModel(model);
@@ -348,7 +361,7 @@ public class Main{
     public static void main(String[] args){
         materiaList.add(new Materia("Nome", "02", 04));
         materiaList.add(new Materia("Nome2", "03", 04));
-        AlunoList.add(new Aluno("Pedro", "085", "2012AB", "10/06/2004"));
+       // AlunoList.add(new Aluno("Pedro", "085", "2012AB", "10/06/2004"));
         build();
     }
 

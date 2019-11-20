@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Pessoa {
     private String nome;
     protected int totalhoras;
@@ -42,7 +45,5 @@ public abstract class Pessoa {
         this.dataNascimento = dataNascimento;
     }
 
-    public void calculaTotalHoras() {
-
-    }
+    public abstract String calculaTotalHoras();
 }
