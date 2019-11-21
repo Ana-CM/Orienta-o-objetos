@@ -73,7 +73,14 @@ public class Main{
         MateriaPanel.getDeletarButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Materia m = materiaList.get(MateriaPanel.getMateriaTable().getSelectedRow());
                 materiaList.remove(MateriaPanel.getMateriaTable().getSelectedRow());
+                for(Aluno a: AlunoList){
+                    a.removeMateria(m);
+                }
+                for(Professor p: ProfessorList){
+                    p.removeMateria(m);
+                }
                 buildMateria();
             }
         });
@@ -390,7 +397,7 @@ public class Main{
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeScreen(PROFESSORPAINEL);
-                buildAluno();
+                buildProfessor();
             }
         });
 
@@ -674,10 +681,11 @@ public class Main{
         pane.add(cards, BorderLayout.CENTER);
     }
     public static void main(String[] args){
-        List<Materia> lista = new ArrayList<>();
-        materiaList.add(new Materia("Nome", "02", 04));
-        materiaList.add(new Materia("Nome2", "03", 04));
-        AlunoList.add(new Aluno("Pedro", "08556780716", "2012AB", "10/06/2004", lista));
+        materiaList.add(new Materia("Estrutura de Dados", "02", 04));
+        materiaList.add(new Materia("Orientação à Objetos", "03", 04));
+        AlunoList.add(new Aluno("Gabriel Chaves", "08556780716", "2012AB", "10/06/2004", new ArrayList<>()));
+        AlunoList.add(new Aluno("Ana Mendes", "08556780716", "2012AB", "10/06/2004", new ArrayList<>()));
+        ProfessorList.add(new Professor("Gleiph", "12312312312", "DCC", "12/02/1987", new ArrayList<>()));
         build();
     }
 
